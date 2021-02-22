@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 int main(){
-    int num,guess_num,trials=1,limits,ch,res_game;
+    int num,guess_num,trials=1,limits,ch,res_game,guess_left;
     srand(time(0));
     num = rand()%100 + 1;
     printf("For instructions Press 1 ,To play the game Press 2 :");
@@ -18,34 +18,41 @@ int main(){
     
     if (ch == 2){
         printf("How many trials do you need :");
-    scanf("%d",&limits);
-    do
-    {
-        printf("Enter your guess(1-100) : \n");
-        scanf("%d",&guess_num);
-        if (guess_num < num)
+        scanf("%d",&limits);
+        guess_left = limits;
+        do
         {
-            printf("Enter a higher number \n");
-            trials += 1;
-        }
-        if (guess_num > num)
-        {
-            printf("Enter a lower number \n");
-             trials += 1;
-        }
-        if (guess_num == num)
-        {
-            printf("Wow,you have found the number, the number is %d \n",num);
-            printf("You did this in %d trys \n",trials);
-            break;
-        } 
-        if (trials > limits) {
-        	printf("Ran out of trials! better luck next time :) \n") ;
-            printf("The number  is %d \n",num);
-        	break;
-        	}
-    } while (trials < limits+1);
-        
+            printf("Enter your guess(1-100) : \n");
+            scanf("%d",&guess_num);
+            printf("You have %d trials left! \n",guess_left-1);
+            guess_left -= 1;
+            if (guess_left == 0)
+            {
+                printf("You have lost!!! \n");
+                printf("The number  is %d \n",num);
+                break;
+            }
+            
+            if (guess_num < num)
+            {
+                printf("Enter a higher number \n");
+                trials += 1;
+                
+            }
+            if (guess_num > num)
+            {
+                printf("Enter a lower number \n");
+                trials += 1;
+            }
+            if (guess_num == num)
+            {
+                printf("Wow,you have found the number, the number is %d \n",num);
+                printf("You did this in %d trys \n",trials);
+                break;
+            } 
+            
+        } while (trials < limits+1);
+            
 
     }
     printf("TIP:To make the game harder decrease the trials \n");
